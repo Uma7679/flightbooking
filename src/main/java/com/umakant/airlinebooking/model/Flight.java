@@ -2,17 +2,22 @@ package com.umakant.airlinebooking.model;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
+import java.util.UUID;
 
 @Entity
 public class Flight {
     @Id
-    int flightId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    UUID flightId;
     String sourceAirport;
     String destinationAirport;
     int capacity;
 
-    public Flight(int flightId, String sourceAirport, String destinationAirport, int capacity) {
+    public Flight(UUID flightId, String sourceAirport, String destinationAirport, int capacity) {
         this.flightId = flightId;
         this.sourceAirport = sourceAirport;
         this.destinationAirport = destinationAirport;
@@ -21,7 +26,7 @@ public class Flight {
 
     public Flight() { }
 
-    public int getFlightId() {
+    public UUID getFlightId() {
         return flightId;
     }
 

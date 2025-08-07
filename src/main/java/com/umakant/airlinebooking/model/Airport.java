@@ -2,17 +2,22 @@ package com.umakant.airlinebooking.model;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
+import java.util.UUID;
 
 @Entity
 public class Airport {
     @Id
-    int airportId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    UUID airportId;
     String airportName;
     String latitude;
     String longitude;
 
-    public Airport(int airportId, String airportName, String latitude, String longitude) {
+    public Airport(UUID airportId, String airportName, String latitude, String longitude) {
         this.airportId = airportId;
         this.airportName = airportName;
         this.latitude = latitude;
@@ -22,11 +27,18 @@ public class Airport {
     public Airport() {
     }
 
-    public int getAirportId() {
+    public Airport(Airport airport) {
+        this.airportId = airport.airportId;
+        this.airportName = airport.airportName;
+        this.latitude = airport.latitude;
+        this.longitude = airport.longitude;
+    }
+
+    public UUID getAirportId() {
         return airportId;
     }
 
-    public void setAirportId(int airportId) {
+    public void setAirportId(UUID airportId) {
         this.airportId = airportId;
     }
 
@@ -52,5 +64,15 @@ public class Airport {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    @Override
+    public String toString() {
+        return "Airport{" +
+                "airportId=" + airportId +
+                ", airportName='" + airportName + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                '}';
     }
 }

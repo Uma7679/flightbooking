@@ -1,15 +1,15 @@
 package com.umakant.airlinebooking.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
+import java.util.UUID;
 
 @Entity
 public class Booking {
     @Id
-    int bookingId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    UUID bookingId;
     @ManyToOne
     @JoinColumn(name = "flight_flight_id")
     Flight flight;
@@ -20,5 +20,13 @@ public class Booking {
 
     public void setFlight(Flight flight) {
         this.flight = flight;
+    }
+
+    public UUID getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(UUID bookingId) {
+        this.bookingId = bookingId;
     }
 }
