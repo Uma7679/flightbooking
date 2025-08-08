@@ -6,18 +6,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import java.util.UUID;
 
 @Entity
 public class Airport {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    UUID airportId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    Long airportId;
     String airportName;
     String latitude;
     String longitude;
 
-    public Airport(UUID airportId, String airportName, String latitude, String longitude) {
+    public Airport(Long airportId, String airportName, String latitude, String longitude) {
         this.airportId = airportId;
         this.airportName = airportName;
         this.latitude = latitude;
@@ -34,11 +33,11 @@ public class Airport {
         this.longitude = airport.longitude;
     }
 
-    public UUID getAirportId() {
+    public Long getAirportId() {
         return airportId;
     }
 
-    public void setAirportId(UUID airportId) {
+    public void setAirportId(Long airportId) {
         this.airportId = airportId;
     }
 

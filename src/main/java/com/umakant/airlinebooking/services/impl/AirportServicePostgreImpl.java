@@ -1,29 +1,35 @@
 package com.umakant.airlinebooking.services.impl;
 
 
+import com.umakant.airlinebooking.dto.AirportDTO;
 import com.umakant.airlinebooking.model.Airport;
 import com.umakant.airlinebooking.repositories.AirportRepository;
 import com.umakant.airlinebooking.services.AirportService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 @Service
 public class AirportServicePostgreImpl implements AirportService {
     private final AirportRepository airportRepository;
+    Logger logger;
 
     public AirportServicePostgreImpl(AirportRepository airportRepository) {
         this.airportRepository = airportRepository;
+        this.logger = LoggerFactory.getLogger("Airport Service logger ");
     }
 
     /**
-     * @param airport
+     * @param newAirport
      * @return
      */
     @Override
-    public Airport createAirport(Airport airport) {
+    public Airport createAirport(AirportDTO.NewAirportDTO newAirport) {
+        Airport airport = newAirport.toAirport();
+        logger.info(airport.getAirportId().toString());
         return airportRepository.save(airport);
     }
 
