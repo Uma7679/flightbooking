@@ -7,8 +7,11 @@ import com.umakant.airlinebooking.repositories.AirportRepository;
 import com.umakant.airlinebooking.services.AirportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpServerErrorException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,43 +32,54 @@ public class AirportServicePostgreImpl implements AirportService {
     @Override
     public Airport createAirport(AirportDTO.NewAirportDTO newAirport) {
         Airport airport = newAirport.toAirport();
-        logger.info(airport.getAirportId().toString());
         return airportRepository.save(airport);
     }
 
     /**
-     * @param id
+     * @param airportId
      * @return
      */
     @Override
-    public Airport getAirportById(UUID id) {
-        return null;
+    public AirportDTO.GetAirportDTOResponse getAirportById(UUID airportId) {
+        Airport airport = airportRepository.getAirportByAirportId(airportId);
+        return AirportDTO.GetAirportDTOResponse.getAirportDTO(airport);
     }
 
     /**
      * @return
      */
     @Override
-    public List<Airport> getAllAirports() {
-        return List.of();
+    public List<AirportDTO.GetAirportDTOResponse> getAllAirports() {
+        List<Airport> airportList = airportRepository.findAll();
+        return AirportDTO.GetAirportDTOResponse.getAirportDTOList(airportList);
     }
 
     /**
-     * @param id
+     * @param airportId
      * @param airport
      * @return
      */
     @Override
-    public Airport updateAirport(UUID id, Airport airport) {
-        return null;
+    public AirportDTO.GetAirportDTOResponse updateAirport(UUID airportId, AirportDTO.NewAirportDTO airport) {
+        Airport updatedAirport = airport.toAirport();
+        updatedAirport.setAirportId(airportId);
+        if(airportRepository.existsByAirportId(airportId)){
+            return AirportDTO.GetAirportDTOResponse.getAirportDTO(airportRepository.save(updatedAirport));
+        }
+        else throw new HttpServerErrorException(HttpStatus.NOT_FOUND,"Airport not found!!");
     }
 
     /**
-     * @param id
+     * @param airportId
      * @return
      */
     @Override
-    public Airport deleteAirport(UUID id) {
-        return null;
+    public AirportDTO.GetAirportDTOResponse deleteAirport(UUID airportId) {
+        if(airportRepository.existsByAirportId(airportId)){
+            Airport airport = airportRepository.getAirportByAirportId(airportId);
+            airportRepository.deleteById(airportId);
+            return AirportDTO.GetAirportDTOResponse.getAirportDTO(airport);
+        }
+        else throw new HttpServerErrorException(HttpStatus.NOT_FOUND,"Airport not found!!");
     }
 }

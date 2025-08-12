@@ -1,22 +1,24 @@
 package com.umakant.airlinebooking.services;
 
+import com.umakant.airlinebooking.dto.FlightDTO;
 import com.umakant.airlinebooking.model.Flight;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface FightService {
     //create flight
-    Flight createFlight(Flight flight);
+    Flight createFlight(FlightDTO.NewFlightDTO flight);
 
     //get flight
-    Flight getFlightById(int id);
+    FlightDTO.GetFlightDTOResponse getFlightById(UUID flightId);
 
     //get all flights
-    List<Flight> getAllFlights();
+    List<FlightDTO.GetFlightDTOResponse> getAllFlights();
 
     //update flight
-    Flight updateFlight(int id, Flight flight);
+    FlightDTO.GetFlightDTOResponse updateFlight(UUID flightId, FlightDTO.NewFlightDTO flight);
 
     //delete flight
-    Flight deleteFlightById(int id);
+    FlightDTO.GetFlightDTOResponse deleteFlightById(UUID flightId);
 }

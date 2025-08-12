@@ -4,7 +4,7 @@ package com.umakant.airlinebooking.controller;
 import com.umakant.airlinebooking.dto.AirportDTO;
 import com.umakant.airlinebooking.model.Airport;
 import com.umakant.airlinebooking.services.AirportService;
-import org.springframework.stereotype.Controller;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,30 +21,30 @@ public class AirportController {
 
     //create airport
     @PostMapping("/")
-    public Airport createAirport(@RequestBody AirportDTO.NewAirportDTO newAirport){
+    public Airport createAirport(@Valid @RequestBody AirportDTO.NewAirportDTO newAirport){
         return airportService.createAirport(newAirport);
     }
 
     //get airport by id
-    @GetMapping("/{id}")
-    public Airport getAirport(@PathVariable UUID id){
-        return airportService.getAirportById(id);
+    @GetMapping("/{airportId}")
+    public AirportDTO.GetAirportDTOResponse getAirport(@PathVariable UUID airportId){
+        return airportService.getAirportById(airportId);
     }
 
     @GetMapping("/")
-    public List<Airport> getAllAirports(){
+    public List<AirportDTO.GetAirportDTOResponse> getAllAirports(){
         return airportService.getAllAirports();
     }
 
     //Update airport
-    @PutMapping("/{id}")
-    public Airport updateAirport(@PathVariable UUID id, Airport airport){
-        return airportService.updateAirport(id, airport);
+    @PutMapping("/{airportId}")
+    public AirportDTO.GetAirportDTOResponse updateAirport(@PathVariable UUID airportId, @Valid @RequestBody AirportDTO.NewAirportDTO updatedAirport){
+        return airportService.updateAirport(airportId, updatedAirport);
     }
 
     //Delete airport
-    @DeleteMapping("/{id}")
-    public Airport deleteAirport(@PathVariable UUID id){
-        return airportService.deleteAirport(id);
+    @DeleteMapping("/{airportId}")
+    public AirportDTO.GetAirportDTOResponse deleteAirport(@PathVariable UUID airportId){
+        return airportService.deleteAirport(airportId);
     }
 }

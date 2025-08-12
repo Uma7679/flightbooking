@@ -1,10 +1,8 @@
 package com.umakant.airlinebooking.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
@@ -13,32 +11,57 @@ public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID flightId;
-    String sourceAirport;
-    String destinationAirport;
+
+    @ManyToOne
+    @JoinColumn(name = "source_airport_airport_id")
+    @NotNull
+    Airport sourceAirport;
+
+    @ManyToOne
+    @JoinColumn(name = "destination_airport_airport_id")
+    @NotNull
+    Airport destinationAirport;
     int capacity;
 
-    public Flight(UUID flightId, String sourceAirport, String destinationAirport, int capacity) {
+    public Flight(UUID flightId, Airport sourceAirport, Airport destinationAirport, int capacity) {
         this.flightId = flightId;
         this.sourceAirport = sourceAirport;
         this.destinationAirport = destinationAirport;
         this.capacity = capacity;
     }
 
-    public Flight() { }
+    public Flight() {
+    }
 
     public UUID getFlightId() {
         return flightId;
     }
 
-    public String getSourceAirport() {
+    public void setFlightId(UUID flightId) {
+        this.flightId = flightId;
+    }
+
+    public Airport getSourceAirport() {
         return sourceAirport;
     }
 
-    public String getDestinationAirport() {
+    public void setSourceAirport(Airport sourceAirport) {
+        this.sourceAirport = sourceAirport;
+    }
+
+    public Airport getDestinationAirport() {
         return destinationAirport;
+    }
+
+    public void setDestinationAirport(Airport destinationAirport) {
+        this.destinationAirport = destinationAirport;
     }
 
     public int getCapacity() {
         return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 }

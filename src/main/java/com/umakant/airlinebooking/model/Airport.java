@@ -1,22 +1,31 @@
 package com.umakant.airlinebooking.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
+import java.util.UUID;
 
 
 @Entity
 public class Airport {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    Long airportId;
-    String airportName;
-    String latitude;
-    String longitude;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID airportId;
 
-    public Airport(Long airportId, String airportName, String latitude, String longitude) {
+    @Column(unique = true, nullable = false)
+    @NotNull
+    private String airportName;
+
+    @Column(nullable = false)
+    @NotNull
+    private Double latitude;
+
+    @Column(nullable = false)
+    @NotNull
+    private Double longitude;
+
+    public Airport(UUID airportId, String airportName, Double latitude, Double longitude) {
         this.airportId = airportId;
         this.airportName = airportName;
         this.latitude = latitude;
@@ -33,11 +42,11 @@ public class Airport {
         this.longitude = airport.longitude;
     }
 
-    public Long getAirportId() {
+    public UUID getAirportId() {
         return airportId;
     }
 
-    public void setAirportId(Long airportId) {
+    public void setAirportId(UUID airportId) {
         this.airportId = airportId;
     }
 
@@ -49,19 +58,19 @@ public class Airport {
         this.airportName = airportName;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 

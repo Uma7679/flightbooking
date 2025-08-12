@@ -11,14 +11,14 @@ public interface AirportService {
     Airport createAirport(AirportDTO.NewAirportDTO airport);
 
     //get an airport using id
-    Airport getAirportById(UUID id);
+    AirportDTO.GetAirportDTOResponse getAirportById(UUID airportId);
 
     //get all airports
-    List<Airport> getAllAirports();
+    List<AirportDTO.GetAirportDTOResponse> getAllAirports();
 
     //update
-    Airport updateAirport(UUID id, Airport airport);
+    AirportDTO.GetAirportDTOResponse updateAirport(UUID id, AirportDTO.NewAirportDTO updatedAirport);
 
     //delete
-    Airport deleteAirport(UUID id);
+    AirportDTO.GetAirportDTOResponse deleteAirport(UUID id);
 }
