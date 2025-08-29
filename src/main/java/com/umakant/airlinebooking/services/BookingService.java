@@ -1,23 +1,25 @@
 package com.umakant.airlinebooking.services;
 
+import com.umakant.airlinebooking.dto.BookingDTO;
 import com.umakant.airlinebooking.model.Booking;
+import org.apache.coyote.BadRequestException;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface BookingService {
     //create booking
-    Booking createBooking(Booking booking);
+    BookingDTO.GetBookingResponse createBooking(BookingDTO.NewBookingDTO booking) throws BadRequestException;
 
     //get booking details by id
-    Booking getBookingById(UUID id);
+    BookingDTO.GetBookingResponse getBookingById(UUID bookingId);
 
     //get all bookings
-    List<Booking> getAllBookings();
+    List<BookingDTO.GetBookingResponse> getAllBookings();
 
     //update booking details
-    Booking updateBooking(UUID id, Booking booking);
+    BookingDTO.GetBookingResponse updateBooking(UUID bookingId, BookingDTO.NewBookingDTO booking);
 
     //delete Booking
-    Booking deleteBooking(UUID id);
+    BookingDTO.GetBookingResponse deleteBooking(UUID bookingId);
 }

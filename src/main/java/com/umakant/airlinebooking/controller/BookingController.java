@@ -1,11 +1,15 @@
 package com.umakant.airlinebooking.controller;
 
 
+import com.umakant.airlinebooking.dto.BookingDTO;
 import com.umakant.airlinebooking.model.Booking;
 import com.umakant.airlinebooking.services.BookingService;
+import org.apache.coyote.BadRequestException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,31 +24,31 @@ public class BookingController {
 
     //create booking
     @PostMapping("/")
-    public Booking createBooking(Booking booking){
-        return bookingService.createBooking(booking);
+    public ResponseEntity<BookingDTO.GetBookingResponse> createBooking(@RequestBody BookingDTO.NewBookingDTO newBooking) throws BadRequestException {
+        return ResponseEntity.created(URI.create("/api/booking/")).body(bookingService.createBooking(newBooking));
     }
 
     //get booking
-    @GetMapping("/{id}")
-    public Booking getBooking(@PathVariable UUID id){
-        return bookingService.getBookingById(id);
+    @GetMapping("/{bookingId}")
+    public ResponseEntity<BookingDTO.GetBookingResponse> getBooking(@PathVariable UUID bookingId){
+        return ResponseEntity.ok().body(bookingService.getBookingById(bookingId));
     }
 
     //get All bookings
     @GetMapping("/")
-    public List<Booking> getAllBookings(){
-        return bookingService.getAllBookings();
+    public ResponseEntity<List<BookingDTO.GetBookingResponse>> getAllBookings(){
+        return ResponseEntity.ok().body(bookingService.getAllBookings());
     }
 
     //update booking
-    @PutMapping("/{id}")
-    public Booking updateBooking(@PathVariable UUID id, Booking booking){
-        return bookingService.updateBooking(id, booking);
+    @PutMapping("/{bookingId}")
+    public ResponseEntity<BookingDTO.GetBookingResponse> updateBooking(@PathVariable UUID bookingId, @RequestBody BookingDTO.NewBookingDTO booking){
+        return ResponseEntity.ok().body(bookingService.updateBooking(bookingId, booking));
     }
 
     //delete booking
-    @DeleteMapping("/{id}")
-    public Booking deleteBooking(@PathVariable UUID id){
-        return bookingService.deleteBooking(id);
+    @DeleteMapping("/{bookingId}")
+    public ResponseEntity<BookingDTO.GetBookingResponse> deleteBooking(@PathVariable UUID bookingId){
+        return ResponseEntity.ok().body(bookingService.deleteBooking(bookingId));
     }
 }

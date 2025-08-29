@@ -30,9 +30,9 @@ public class AirportServicePostgreImpl implements AirportService {
      * @return
      */
     @Override
-    public Airport createAirport(AirportDTO.NewAirportDTO newAirport) {
+    public AirportDTO.GetAirportDTOResponse createAirport(AirportDTO.NewAirportDTO newAirport) {
         Airport airport = newAirport.toAirport();
-        return airportRepository.save(airport);
+        return AirportDTO.GetAirportDTOResponse.getAirportDTO(airportRepository.save(airport));
     }
 
     /**
@@ -65,8 +65,7 @@ public class AirportServicePostgreImpl implements AirportService {
         updatedAirport.setAirportId(airportId);
         if(airportRepository.existsByAirportId(airportId)){
             return AirportDTO.GetAirportDTOResponse.getAirportDTO(airportRepository.save(updatedAirport));
-        }
-        else throw new HttpServerErrorException(HttpStatus.NOT_FOUND,"Airport not found!!");
+        } else throw new HttpServerErrorException(HttpStatus.NOT_FOUND, "Airport not found!!");
     }
 
     /**

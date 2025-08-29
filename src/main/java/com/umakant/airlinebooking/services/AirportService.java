@@ -2,13 +2,14 @@ package com.umakant.airlinebooking.services;
 
 import com.umakant.airlinebooking.dto.AirportDTO;
 import com.umakant.airlinebooking.model.Airport;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface AirportService {
     //create
-    Airport createAirport(AirportDTO.NewAirportDTO airport);
+    AirportDTO.GetAirportDTOResponse createAirport(AirportDTO.NewAirportDTO airport);
 
     //get an airport using id
     AirportDTO.GetAirportDTOResponse getAirportById(UUID airportId);

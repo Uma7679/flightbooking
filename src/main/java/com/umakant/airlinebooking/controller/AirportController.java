@@ -5,8 +5,10 @@ import com.umakant.airlinebooking.dto.AirportDTO;
 import com.umakant.airlinebooking.model.Airport;
 import com.umakant.airlinebooking.services.AirportService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,30 +23,30 @@ public class AirportController {
 
     //create airport
     @PostMapping("/")
-    public Airport createAirport(@Valid @RequestBody AirportDTO.NewAirportDTO newAirport){
-        return airportService.createAirport(newAirport);
+    public ResponseEntity<AirportDTO.GetAirportDTOResponse> createAirport(@Valid @RequestBody AirportDTO.NewAirportDTO newAirport){
+        return ResponseEntity.created(URI.create("/api/airport/")).body(airportService.createAirport(newAirport));
     }
 
     //get airport by id
     @GetMapping("/{airportId}")
-    public AirportDTO.GetAirportDTOResponse getAirport(@PathVariable UUID airportId){
-        return airportService.getAirportById(airportId);
+    public ResponseEntity<AirportDTO.GetAirportDTOResponse> getAirport(@PathVariable UUID airportId){
+        return ResponseEntity.ok().body(airportService.getAirportById(airportId));
     }
 
     @GetMapping("/")
-    public List<AirportDTO.GetAirportDTOResponse> getAllAirports(){
-        return airportService.getAllAirports();
+    public ResponseEntity<List<AirportDTO.GetAirportDTOResponse>> getAllAirports(){
+        return ResponseEntity.ok().body(airportService.getAllAirports());
     }
 
     //Update airport
     @PutMapping("/{airportId}")
-    public AirportDTO.GetAirportDTOResponse updateAirport(@PathVariable UUID airportId, @Valid @RequestBody AirportDTO.NewAirportDTO updatedAirport){
-        return airportService.updateAirport(airportId, updatedAirport);
+    public ResponseEntity<AirportDTO.GetAirportDTOResponse> updateAirport(@PathVariable UUID airportId, @Valid @RequestBody AirportDTO.NewAirportDTO updatedAirport){
+        return ResponseEntity.ok().body(airportService.updateAirport(airportId, updatedAirport));
     }
 
     //Delete airport
     @DeleteMapping("/{airportId}")
-    public AirportDTO.GetAirportDTOResponse deleteAirport(@PathVariable UUID airportId){
-        return airportService.deleteAirport(airportId);
+    public ResponseEntity<AirportDTO.GetAirportDTOResponse> deleteAirport(@PathVariable UUID airportId){
+        return ResponseEntity.ok().body(airportService.deleteAirport(airportId));
     }
 }
